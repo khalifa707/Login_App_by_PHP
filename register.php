@@ -1,4 +1,16 @@
 <?php
+include 'database.php';
+
+$errors= "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $username = mysqli_real_escape_string($conn,$_POST['username']);
+    $password = mysqli_real_escape_string($conn,$_POST['password']);
+    $confirm_password = mysqli_real_escape_string($conn,$_POST['confirm_password']);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
