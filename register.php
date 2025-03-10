@@ -15,12 +15,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if ($password != $confirm_password) {
     $errors = "Passwords do not match";
 }else{
-    $sql = "INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')";
-    if(mysqli_query($conn, $sql)){
-        echo "New record created successfully";
-    }else{
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
+
+    $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+    $result = mysqli_query($conn,$sql);
+
+   if (mysqli_num_rows($result) ===1) {
+       $errors = "This email is already registered";
+   }
+
+//    $sql = "INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')";
+//    if(mysqli_query($conn, $sql)){
+//        echo "New record created successfully";
+//    }else{
+//        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+//    }
 }
 ?>
 <!DOCTYPE html>
@@ -62,9 +70,11 @@ if ($password != $confirm_password) {
             <h2>Create your Account</h2>
 
             <!-- Error message placeholder -->
-            <p style="color:red">
-                <!-- Error message goes here -->
-            </p>
+            <?php if($errors): ?>
+                <p style="color:red">
+                    <?php echo $errors; ?>
+                </p>
+            <?php endif; ?>
 
             <label for="username">Username:</label>
             <input placeholder="Enter your username" type="text" name="username" required aria-label="">
