@@ -11,6 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = mysqli_real_escape_string($conn,$_POST['confirm_password']);
 }
 
+
+if ($password != $confirm_password) {
+    echo "Passwords do not match";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
