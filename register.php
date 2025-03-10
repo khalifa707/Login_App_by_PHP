@@ -13,7 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 if ($password != $confirm_password) {
-    echo "Passwords do not match";
+    $errors = "Passwords do not match";
+}else{
+    $sql = "INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')";
+    if(mysqli_query($conn, $sql)){
+        echo "New record created successfully";
+    }else{
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 }
 ?>
 <!DOCTYPE html>
